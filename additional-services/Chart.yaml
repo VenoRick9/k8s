@@ -1,0 +1,39 @@
+apiVersion: v2
+name: additional-services
+description: A Helm umbrella chart for deploying multiple services.
+type: application
+version: 0.1.0
+
+dependencies:
+  - name: postgresql
+    version: 12.2.5
+    repository: https://charts.bitnami.com/bitnami
+    alias: postgresql-user
+    condition: postgresql-user.enabled
+
+  - name: postgresql
+    version: 12.2.5
+    repository: https://charts.bitnami.com/bitnami
+    alias: postgresql-auth
+    condition: postgresql-auth.enabled
+
+  - name: postgresql
+    version: 12.2.5
+    repository: https://charts.bitnami.com/bitnami
+    alias: postgresql-order
+    condition: postgresql-order.enabled
+
+  - name: mongodb
+    version: 13.0.0
+    repository: https://charts.bitnami.com/bitnami
+    condition: mongodb.enabled
+
+  - name: redis
+    version: 17.3.2
+    repository: https://charts.bitnami.com/bitnami
+    condition: redis.enabled
+
+  - name: kafka
+    version: 22.1.5
+    repository: https://charts.bitnami.com/bitnami
+    condition: kafka.enabled
