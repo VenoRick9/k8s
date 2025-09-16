@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment-service
+  namespace: innowise
+  labels:
+    app: payment-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payment-service
+  template:
+    metadata:
+      labels:
+        app: payment-service
+    spec:
+      containers:
+        - name: payment-service
+          image: pandarick9/paymentservice:97350350fbc786e918f1ab18c28144041c3b6c7a
+          ports:
+            - containerPort: 8077
+          env:
+            - name: SERVER_PORT
+              value: "8077"
+            - name: SPRING_DATA_MONGODB_URI
+              value: "mongodb://rootuser:rootpass@mongodb:27017/payment_db?authSource=admin&appName=PaymentService"
+            - name: SPRING_KAFKA_CONSUMER_BOOTSTRAP_SERVERS
+              value: "kafka:9092"
+            - name: SPRING_KAFKA_PRODUCER_BOOTSTRAP_SERVERS
+              value: "kafka:9092"
+            - name: JWT_SECRET_ACCESS
+              value: "U2VjcmV0S2V5Rm9yQWNjZXNzVG9rZW5BdXRoU2VydmljZQ=="
+            - name: SPRING_LIQUIBASE_ENABLED
+              value: "false"
+            - name: SPRING_PROFILES_ACTIVE
+              value: "docker"
+            - name: PATH_TO_CHANGELOGFILE
+              value: classpath:/db/changelog/db.changelog-master.xml
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1Gi"
+              cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: payment-service
+  namespace: innowise
+  labels:
+    app: payment-service
+spec:
+  type: ClusterIP
+  selector:
+    app: payment-service
+  ports:
+    - name: http
+      port: 8077
+      targetPort: 8077

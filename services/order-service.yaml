@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-service
+  namespace: innowise
+  labels:
+    app: order-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-service
+  template:
+    metadata:
+      labels:
+        app: order-service
+    spec:
+      containers:
+        - name: order-service
+          image: pandarick9/orderservice:4b7ba4abc8a36cca950517481328e93badf2cd68
+          ports:
+            - containerPort: 8078
+          env:
+            - name: SERVER_PORT
+              value: "8078"
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:postgresql://postgres-order:5432/order_service"
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "postgres"
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: "Postgres_9"
+            - name: SPRING_JPA_HIBERNATE_DDL_AUTO
+              value: "none"
+            - name: SPRING_LIQUIBASE_ENABLED
+              value: "true"
+            - name: JWT_SECRET_ACCESS
+              value: "U2VjcmV0S2V5Rm9yQWNjZXNzVG9rZW5BdXRoU2VydmljZQ=="
+            - name: EXTERNAL_SERVER_BASEURL
+              value: "http://user-service:8080"
+            - name: SPRING_KAFKA_CONSUMER_BOOTSTRAP_SERVERS
+              value: "kafka:9092"
+            - name: SPRING_KAFKA_PRODUCER_BOOTSTRAP_SERVERS
+              value: "kafka:9092"
+            - name: SPRING_PROFILES_ACTIVE
+              value: "kubernetes"
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1Gi"
+              cpu: "500m"
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-service
+  namespace: innowise
+  labels:
+    app: order-service
+spec:
+  type: ClusterIP
+  selector:
+    app: order-service
+  ports:
+    - name: http
+      port: 8078
+      targetPort: 8078
