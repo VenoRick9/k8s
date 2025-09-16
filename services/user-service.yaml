@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: user-service
-          image: pandarick9/userservice:2e3e5d6609b8709c63d19ad72e404c109cc977b0
+          image: pandarick9/userservice:8c5505bd709573b10b1478fbea0a2662e82e55e1
           ports:
             - containerPort: 8080
           env:
@@ -42,7 +42,7 @@ spec:
             - name: SPRING_CACHE_TYPE
               value: "redis"
             - name: SPRING_PROFILES_ACTIVE
-              value: "kubernetes"
+              value: "local"
           resources:
             requests:
               memory: "512Mi"
@@ -50,6 +50,27 @@ spec:
             limits:
               memory: "1Gi"
               cpu: "500m"
+          readinessProbe:
+            initialDelaySeconds: 120
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+            failureThreshold: 3
+            httpGet:
+              scheme: HTTP
+              path: /users/actuator/health/readiness
+              port: 8080
+
+          livenessProbe:
+            initialDelaySeconds: 120
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+            failureThreshold: 3
+            httpGet:
+              scheme: HTTP
+              path: /users/actuator/health/liveness
+              port: 8080
 
 ---
 

@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: api-gateway
-          image: pandarick9/apigateway:c1d55792be389a0a169fc5e0cc83342246384042
+          image: pandarick9/apigateway:854466ddd7315e0f0eefb5a967d13b149bc51eb3
           ports:
             - containerPort: 7070
           env:
@@ -42,6 +42,27 @@ spec:
             limits:
               memory: "1Gi"
               cpu: "500m"
+          readinessProbe:
+            initialDelaySeconds: 120
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+            failureThreshold: 3
+            httpGet:
+              scheme: HTTP
+              path: /gateway/actuator/health/readiness
+              port: 7070
+
+          livenessProbe:
+            initialDelaySeconds: 120
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+            failureThreshold: 3
+            httpGet:
+              scheme: HTTP
+              path: /gateway/actuator/health/liveness
+              port: 7070
 
 ---
 

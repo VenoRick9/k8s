@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: order-service
-          image: pandarick9/orderservice:4b7ba4abc8a36cca950517481328e93badf2cd68
+          image: pandarick9/orderservice:9783a8c41bc6ea9e9944d9f8d50f3d72c2ec42e5
           ports:
             - containerPort: 8078
           env:
@@ -42,7 +42,7 @@ spec:
             - name: SPRING_KAFKA_PRODUCER_BOOTSTRAP_SERVERS
               value: "kafka:9092"
             - name: SPRING_PROFILES_ACTIVE
-              value: "kubernetes"
+              value: "docker"
           resources:
             requests:
               memory: "512Mi"
@@ -50,6 +50,27 @@ spec:
             limits:
               memory: "1Gi"
               cpu: "500m"
+          readinessProbe:
+            initialDelaySeconds: 120
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+            failureThreshold: 3
+            httpGet:
+              scheme: HTTP
+              path: /orders/actuator/health/readiness
+              port: 8078
+
+          livenessProbe:
+            initialDelaySeconds: 120
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+            failureThreshold: 3
+            httpGet:
+              scheme: HTTP
+              path: /orders/actuator/health/liveness
+              port: 8078
 
 ---
 

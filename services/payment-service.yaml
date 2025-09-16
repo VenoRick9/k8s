@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: payment-service
-          image: pandarick9/paymentservice:97350350fbc786e918f1ab18c28144041c3b6c7a
+          image: pandarick9/paymentservice:8406d20f167d4f8024bbfe3000e47391174166de
           ports:
             - containerPort: 8077
           env:
@@ -44,6 +44,27 @@ spec:
             limits:
               memory: "1Gi"
               cpu: "500m"
+          readinessProbe:
+            initialDelaySeconds: 120
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+            failureThreshold: 3
+            httpGet:
+              scheme: HTTP
+              path: /payments/actuator/health/readiness
+              port: 8077
+
+          livenessProbe:
+            initialDelaySeconds: 120
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+            failureThreshold: 3
+            httpGet:
+              scheme: HTTP
+              path: /payments/actuator/health/liveness
+              port: 8077
 ---
 apiVersion: v1
 kind: Service

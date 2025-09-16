@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: auth-service
-          image: pandarick9/authenticationservice:77a9994255c994915fbe51b41ab71a16120120ab
+          image: pandarick9/authenticationservice:9dc3d7274a2e8bd92c343c797c583aa0a801265c
           ports:
             - containerPort: 8079
           env:
@@ -38,7 +38,7 @@ spec:
             - name: JWT_SECRET_REFRESH
               value: "U2VjcmV0S2V5Rm9yUmVmcmVzaFRva2VuQXV0aFNlcnZpY2U="
             - name: SPRING_PROFILES_ACTIVE
-              value: "kubernetes"
+              value: "local"
           resources:
             requests:
               memory: "512Mi"
@@ -46,6 +46,28 @@ spec:
             limits:
               memory: "1Gi"
               cpu: "500m"
+          readinessProbe:
+            initialDelaySeconds: 120
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+            failureThreshold: 3
+            httpGet:
+              scheme: HTTP
+              path: /auth/actuator/health/readiness
+              port: 8079
+
+          livenessProbe:
+            initialDelaySeconds: 120
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+            failureThreshold: 3
+            httpGet:
+              scheme: HTTP
+              path: /auth/actuator/health/liveness
+              port: 8079
+
 
 ---
 apiVersion: v1
