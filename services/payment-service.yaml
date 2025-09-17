@@ -20,23 +20,15 @@ spec:
           image: pandarick9/paymentservice:8406d20f167d4f8024bbfe3000e47391174166de
           ports:
             - containerPort: 8077
+          envFrom:
+            - configMapRef:
+                name: payment-service-config
           env:
-            - name: SERVER_PORT
-              value: "8077"
-            - name: SPRING_DATA_MONGODB_URI
-              value: "mongodb://rootuser:rootpass@mongodb:27017/payment_db?authSource=admin&appName=PaymentService"
-            - name: SPRING_KAFKA_CONSUMER_BOOTSTRAP_SERVERS
-              value: "kafka:9092"
-            - name: SPRING_KAFKA_PRODUCER_BOOTSTRAP_SERVERS
-              value: "kafka:9092"
             - name: JWT_SECRET_ACCESS
-              value: "U2VjcmV0S2V5Rm9yQWNjZXNzVG9rZW5BdXRoU2VydmljZQ=="
-            - name: SPRING_LIQUIBASE_ENABLED
-              value: "false"
-            - name: SPRING_PROFILES_ACTIVE
-              value: "docker"
-            - name: PATH_TO_CHANGELOGFILE
-              value: classpath:/db/changelog/db.changelog-master.xml
+              valueFrom:
+                secretKeyRef:
+                  name: payment-service-secret
+                  key: jwt-secret-access
           resources:
             requests:
               memory: "512Mi"

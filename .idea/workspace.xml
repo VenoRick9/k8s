@@ -1,7 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="93ad5476-cf8f-4d7b-9f7a-7dd585a2db70" name="Changes" comment="add simple settings for k8s" />
+    <list default="true" id="93ad5476-cf8f-4d7b-9f7a-7dd585a2db70" name="Changes" comment="add probes">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kafka/kafka.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/kafka/kafka.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kafka/zookeeper.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/kafka/zookeeper.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mongodb/mongodb.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/mongodb/mongodb.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postgres/postgres-auth.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/postgres/postgres-auth.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postgres/postgres-order.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/postgres/postgres-order.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postgres/postgres-user.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/postgres/postgres-user.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/api-gateway.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/services/api-gateway.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/auth-service.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/services/auth-service.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/order-service.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/services/order-service.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/payment-service.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/services/payment-service.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/user-service.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/services/user-service.yaml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -42,7 +58,11 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "k8s",
-    "last_opened_file_path": "D:/Innowise/k8s",
+    "last_opened_file_path": "D:/Innowise/k8s/services",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "SDKs",
     "project.structure.proportion": "0.0",
@@ -50,6 +70,11 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Innowise\k8s\services" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -74,6 +99,9 @@
       <workItem from="1758017591386" duration="191000" />
       <workItem from="1758017829054" duration="264000" />
       <workItem from="1758018250747" duration="70000" />
+      <workItem from="1758019461895" duration="7380000" />
+      <workItem from="1758032185731" duration="4541000" />
+      <workItem from="1758088899731" duration="5813000" />
     </task>
     <task id="LOCAL-00001" summary="add simple settings for k8s">
       <option name="closed" value="true" />
@@ -83,7 +111,15 @@
       <option name="project" value="LOCAL" />
       <updated>1758017133195</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="add probes">
+      <option name="closed" value="true" />
+      <created>1758026038355</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1758026038355</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -94,7 +130,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="k8s" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -102,6 +150,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="add simple settings for k8s" />
-    <option name="LAST_COMMIT_MESSAGE" value="add simple settings for k8s" />
+    <MESSAGE value="add probes" />
+    <option name="LAST_COMMIT_MESSAGE" value="add probes" />
   </component>
 </project>

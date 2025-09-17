@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: user-service-config
+  namespace: innowise
+data:
+  SERVER_PORT: "8080"
+  SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres-user:5432/user_service"
+  SPRING_DATASOURCE_USERNAME: "postgres"
+  SPRING_DATA_REDIS_HOST: "redis"
+  SPRING_DATA_REDIS_PORT: "6379"
+  SPRING_JPA_HIBERNATE_DDL_AUTO: "none"
+  SPRING_LIQUIBASE_ENABLED: "true"
+  SPRING_CACHE_TYPE: "redis"
+  SPRING_PROFILES_ACTIVE: "local"
+
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: user-service-secret
+  namespace: innowise
+type: Opaque
+stringData:
+  SPRING_DATASOURCE_PASSWORD: "Postgres_9"
+  JWT_SECRET_ACCESS: "U2VjcmV0S2V5Rm9yQWNjZXNzVG9rZW5BdXRoU2VydmljZQ=="

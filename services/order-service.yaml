@@ -20,29 +20,15 @@ spec:
           image: pandarick9/orderservice:9783a8c41bc6ea9e9944d9f8d50f3d72c2ec42e5
           ports:
             - containerPort: 8078
+          envFrom:
+            - configMapRef:
+                name: order-service-config
           env:
-            - name: SERVER_PORT
-              value: "8078"
-            - name: SPRING_DATASOURCE_URL
-              value: "jdbc:postgresql://postgres-order:5432/order_service"
-            - name: SPRING_DATASOURCE_USERNAME
-              value: "postgres"
-            - name: SPRING_DATASOURCE_PASSWORD
-              value: "Postgres_9"
-            - name: SPRING_JPA_HIBERNATE_DDL_AUTO
-              value: "none"
-            - name: SPRING_LIQUIBASE_ENABLED
-              value: "true"
             - name: JWT_SECRET_ACCESS
-              value: "U2VjcmV0S2V5Rm9yQWNjZXNzVG9rZW5BdXRoU2VydmljZQ=="
-            - name: EXTERNAL_SERVER_BASEURL
-              value: "http://user-service:8080"
-            - name: SPRING_KAFKA_CONSUMER_BOOTSTRAP_SERVERS
-              value: "kafka:9092"
-            - name: SPRING_KAFKA_PRODUCER_BOOTSTRAP_SERVERS
-              value: "kafka:9092"
-            - name: SPRING_PROFILES_ACTIVE
-              value: "docker"
+              valueFrom:
+                secretKeyRef:
+                  name: order-service-secret
+                  key: jwt-secret-access
           resources:
             requests:
               memory: "512Mi"

@@ -1,25 +1,15 @@
+
 apiVersion: v1
-kind: Namespace
+kind: PersistentVolumeClaim
 metadata:
-  name: innowise
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: postgres-user-secret
+  name: postgres-user-pvc
   namespace: innowise
-type: Opaque
-data:
-  POSTGRES_PASSWORD: UG9zdGdyZXNfOQ==
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: postgres-user-config
-  namespace: innowise
-data:
-  POSTGRES_DB: "user_service"
-  POSTGRES_USER: "postgres"
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -62,7 +52,8 @@ spec:
               mountPath: /var/lib/postgresql/data
       volumes:
         - name: postgres-user-data
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: postgres-user-pvc
 ---
 apiVersion: v1
 kind: Service
@@ -76,3 +67,5 @@ spec:
   ports:
     - port: 5432
       targetPort: 5432
+
+

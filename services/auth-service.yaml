@@ -20,25 +20,11 @@ spec:
           image: pandarick9/authenticationservice:9dc3d7274a2e8bd92c343c797c583aa0a801265c
           ports:
             - containerPort: 8079
-          env:
-            - name: SERVER_PORT
-              value: "8079"
-            - name: SPRING_DATASOURCE_URL
-              value: "jdbc:postgresql://postgres-auth:5432/auth_service"
-            - name: SPRING_DATASOURCE_USERNAME
-              value: "postgres"
-            - name: SPRING_DATASOURCE_PASSWORD
-              value: "Postgres_9"
-            - name: SPRING_JPA_HIBERNATE_DDL_AUTO
-              value: "none"
-            - name: SPRING_LIQUIBASE_ENABLED
-              value: "true"
-            - name: JWT_SECRET_ACCESS
-              value: "U2VjcmV0S2V5Rm9yQWNjZXNzVG9rZW5BdXRoU2VydmljZQ=="
-            - name: JWT_SECRET_REFRESH
-              value: "U2VjcmV0S2V5Rm9yUmVmcmVzaFRva2VuQXV0aFNlcnZpY2U="
-            - name: SPRING_PROFILES_ACTIVE
-              value: "local"
+          envFrom:
+            - configMapRef:
+                name: auth-service-config
+            - secretRef:
+                name: auth-service-secret
           resources:
             requests:
               memory: "512Mi"

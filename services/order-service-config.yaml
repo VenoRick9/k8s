@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: order-service-config
+  namespace: innowise
+data:
+  SERVER_PORT: "8078"
+  SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres-order:5432/order_service"
+  SPRING_DATASOURCE_USERNAME: "postgres"
+  SPRING_DATASOURCE_PASSWORD: "Postgres_9"
+  SPRING_JPA_HIBERNATE_DDL_AUTO: "none"
+  SPRING_LIQUIBASE_ENABLED: "true"
+  EXTERNAL_SERVER_BASEURL: "http://user-service:8080"
+  SPRING_KAFKA_CONSUMER_BOOTSTRAP_SERVERS: "kafka:9092"
+  SPRING_KAFKA_PRODUCER_BOOTSTRAP_SERVERS: "kafka:9092"
+  SPRING_PROFILES_ACTIVE: "docker"
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: order-service-secret
+  namespace: innowise
+type: Opaque
+stringData:
+  jwt-secret-access: "U2VjcmV0S2V5Rm9yQWNjZXNzVG9rZW5BdXRoU2VydmljZQ=="

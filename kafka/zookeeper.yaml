@@ -1,3 +1,17 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: zookeeper-pvc
+  namespace: innowise
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -18,19 +32,19 @@ spec:
           image: confluentinc/cp-zookeeper:7.3.0
           ports:
             - containerPort: 2181
-          env:
-            - name: ZOOKEEPER_CLIENT_PORT
-              value: "2181"
-            - name: ZOOKEEPER_TICK_TIME
-              value: "2000"
+          envFrom:
+            - configMapRef:
+                name: zookeeper-config
           volumeMounts:
             - name: zookeeper-data
               mountPath: /var/lib/zookeeper/data
       volumes:
         - name: zookeeper-data
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: zookeeper-pvc
 
 ---
+
 apiVersion: v1
 kind: Service
 metadata:

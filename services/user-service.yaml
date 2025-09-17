@@ -20,29 +20,11 @@ spec:
           image: pandarick9/userservice:8c5505bd709573b10b1478fbea0a2662e82e55e1
           ports:
             - containerPort: 8080
-          env:
-            - name: SERVER_PORT
-              value: "8080"
-            - name: SPRING_DATASOURCE_URL
-              value: "jdbc:postgresql://postgres-user:5432/user_service"
-            - name: SPRING_DATASOURCE_USERNAME
-              value: "postgres"
-            - name: SPRING_DATASOURCE_PASSWORD
-              value: "Postgres_9"
-            - name: SPRING_DATA_REDIS_HOST
-              value: "redis"
-            - name: SPRING_DATA_REDIS_PORT
-              value: "6379"
-            - name: SPRING_JPA_HIBERNATE_DDL_AUTO
-              value: "none"
-            - name: SPRING_LIQUIBASE_ENABLED
-              value: "true"
-            - name: JWT_SECRET_ACCESS
-              value: "U2VjcmV0S2V5Rm9yQWNjZXNzVG9rZW5BdXRoU2VydmljZQ=="
-            - name: SPRING_CACHE_TYPE
-              value: "redis"
-            - name: SPRING_PROFILES_ACTIVE
-              value: "local"
+          envFrom:
+            - configMapRef:
+                name: user-service-config
+            - secretRef:
+                name: user-service-secret
           resources:
             requests:
               memory: "512Mi"
