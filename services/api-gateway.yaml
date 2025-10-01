@@ -109,5 +109,3 @@ spec:
                 name: api-gateway
                 port:
                   number: 7070
-
-

@@ -1,9 +1,23 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Service
 metadata:
   name: mongodb
   namespace: innowise
 spec:
+  clusterIP: None
+  selector:
+    app: mongodb
+  ports:
+    - port: 27017
+      targetPort: 27017
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mongodb
+  namespace: innowise
+spec:
+  serviceName: mongodb
   replicas: 1
   selector:
     matchLabels:
@@ -35,35 +49,14 @@ spec:
                   name: mongodb-config
                   key: MONGO_INITDB_DATABASE
           volumeMounts:
-            - name: mongodb-data
+            - name: mongo-payment-data
               mountPath: /data/db
-      volumes:
-        - name: mongodb-data
-          persistentVolumeClaim:
-            claimName: mongo-payment-pvc
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: mongodb
-  namespace: innowise
-spec:
-  type: ClusterIP
-  selector:
-    app: mongodb
-  ports:
-    - port: 27017
-      targetPort: 27017
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: mongo-payment-pvc
-  namespace: innowise
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-payment-data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi

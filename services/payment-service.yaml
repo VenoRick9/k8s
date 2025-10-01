@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: payment-service
-          image: pandarick9/paymentservice:8406d20f167d4f8024bbfe3000e47391174166de
+          image: pandarick9/paymentservice:72e946be72abffe32bc8c0a5c0a0f947949cc0dd
           ports:
             - containerPort: 8077
           envFrom:
