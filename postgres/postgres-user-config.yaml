@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: postgres-user-secret
+  namespace: innowise
+type: Opaque
+data:
+  POSTGRES_PASSWORD: UG9zdGdyZXNfOQ==
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-user-config
+  namespace: innowise
+data:
+  POSTGRES_DB: "user_service"
+  POSTGRES_USER: "postgres"

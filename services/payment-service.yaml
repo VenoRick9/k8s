@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment-service
+  namespace: innowise
+  labels:
+    app: payment-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payment-service
+  template:
+    metadata:
+      labels:
+        app: payment-service
+    spec:
+      containers:
+        - name: payment-service
+          image: pandarick9/paymentservice:72e946be72abffe32bc8c0a5c0a0f947949cc0dd
+          ports:
+            - containerPort: 8077
+          envFrom:
+            - configMapRef:
+                name: payment-service-config
+          env:
+            - name: JWT_SECRET_ACCESS
+              valueFrom:
+                secretKeyRef:
+                  name: payment-service-secret
+                  key: jwt-secret-access
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1Gi"
+              cpu: "500m"
+          readinessProbe:
+            initialDelaySeconds: 120
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+            failureThreshold: 3
+            httpGet:
+              scheme: HTTP
+              path: /payments/actuator/health/readiness
+              port: 8077
+
+          livenessProbe:
+            initialDelaySeconds: 120
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+            failureThreshold: 3
+            httpGet:
+              scheme: HTTP
+              path: /payments/actuator/health/liveness
+              port: 8077
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: payment-service
+  namespace: innowise
+  labels:
+    app: payment-service
+spec:
+  type: ClusterIP
+  selector:
+    app: payment-service
+  ports:
+    - name: http
+      port: 8077
+      targetPort: 8077

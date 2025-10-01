@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: payment-service-config
+  namespace: innowise
+data:
+  SERVER_PORT: "8077"
+  SPRING_DATA_MONGODB_URI: "mongodb://rootuser:rootpass@mongodb:27017/payment_db?authSource=admin&appName=PaymentService"
+  SPRING_KAFKA_CONSUMER_BOOTSTRAP_SERVERS: "kafka:9092"
+  SPRING_KAFKA_PRODUCER_BOOTSTRAP_SERVERS: "kafka:9092"
+  SPRING_LIQUIBASE_ENABLED: "false"
+  SPRING_PROFILES_ACTIVE: "docker"
+  PATH_TO_CHANGELOGFILE: "classpath:/db/changelog/db.changelog-master.xml"
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: payment-service-secret
+  namespace: innowise
+type: Opaque
+stringData:
+  jwt-secret-access: "U2VjcmV0S2V5Rm9yQWNjZXNzVG9rZW5BdXRoU2VydmljZQ=="
